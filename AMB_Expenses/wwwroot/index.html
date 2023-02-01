@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>دخل و خرج</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="AMB_Expenses.styles.css" rel="stylesheet" />
+    <link href="manifest.json" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <!-- inside of head section -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="lib/Blazorise/Font_aw.css">
+
+    <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
+    <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div id="blazor-error-ui">
+        یک خطای غیرقابل پیش بینی رخ داده
+        <a href="" class="reload">رفرش صفحه</a>
+        <a class="dismiss">🗙</a>
+
+    </div>
+ 
+    <script>
+        function ShowModalTrancation() {
+            $('#transactionsModal').modal('show');
+        }
+    </script>
+    <!-- inside of body section and after the div/app tag  -->
+    <!-- These are the standard js dependencies this provider tipically dependes upon, but Blazorise deems these as optional as Blazorise Components should work correctly without these  -->
+    <script src="/lib/Blazorise/jquery.3.5.1.slim.min.js"></script>
+    <script src="/lib/Blazorise/popper.min.js" ></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+    <!--<script src="/lib/bootstrap/js/bootstrap.min.js"></script>-->
+    <script src="_framework/blazor.webassembly.js"></script>
+<script>navigator.serviceWorker.register('service-worker.js');</script>
+
+</body>
+
+</html>

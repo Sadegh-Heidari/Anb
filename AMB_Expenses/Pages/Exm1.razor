@@ -1,0 +1,90 @@
+﻿@page "/exm"
+
+<Tooltip Text="Hello tooltip">
+    <Button Color="Color.Primary">Hover me</Button>
+</Tooltip>
+@*نشان دادن جدول با دلیل ، قیمت ، و قابلیت حذف کردن*@
+@*انتخاب اینکه قرار است  *@
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+<Blazorise.Modal @bind-IsOpen="@isExpenseModalOpen">
+  <Blazorise.ModalHeader>
+    <Blazorise.ModalTitle>
+      ثبت هزینه جدید
+    </Blazorise.ModalTitle>
+  </Blazorise.ModalHeader>
+
+  <Blazorise.ModalBody>
+    <Blazorise.Row>
+      <Blazorise.Column ColumnSize="6">
+        <Blazorise.Label Text="مبلغ (ریال)">
+          <Blazorise.Input @bind-Value="@newExpense.Amount" />
+        </Blazorise.Label>
+      </Blazorise.Column>
+      <Blazorise.Column ColumnSize="6">
+        <Blazorise.Label Text="علت">
+          <Blazorise.Input @bind-Value="@newExpense.Reason" />
+        </Blazorise.Label>
+      </Blazorise.Column>
+    </Blazorise.Row>
+  </Blazorise.ModalBody>
+<Blazorise.Form>
+  <Blazorise.FormGroup>
+    <Blazorise.Label For="TransactionAmount" Text="مبلغ" />
+    <Blazorise.Input id="TransactionAmount" Type="text" @bind-Value="transactionAmount" />
+  </Blazorise.FormGroup>
+  <Blazorise.FormGroup>
+    <Blazorise.Label For="TransactionType" Text="نوع تراکنش" />
+    <Blazorise.Select id="TransactionType" @bind-Value="transactionType">
+      <Blazorise.Option Value="Income">درآمد</Blazorise.Option>
+      <Blazorise.Option Value="Expense">هزینه</Blazorise.Option>
+    </Blazorise.Select>
+  </Blazorise.FormGroup>
+  <Blazorise.FormGroup>
+    <Blazorise.Label For="TransactionReason" Text="دلیل" />
+    <Blazorise.Input id="TransactionReason" Type="text" @bind-Value="transactionReason" />
+  </Blazorise.FormGroup>
+  <Blazorise.Button Text="افزودن تراکنش" Class="mt-3" OnClick="@AddTransaction" />
+</Blazorise.Form>
+@code {
+    private List<Expense> expenses = new List<Expense>();
+    private decimal totalIncome = 0;
+    private decimal totalExpense = 0;
+    private string title = "تراکنش های ماهانه";
+
+    private void AddExpense(decimal amount, string reason)
+    {
+        expenses.Add(new Expense { Amount = amount, Reason = reason });
+        totalExpense += amount;
+    }
+
+    private void AddIncome(decimal amount, string reason)
+    {
+        expenses.Add(new Expense { Amount = amount, Reason = reason });
+        totalIncome += amount;
+    }
+
+    private void RemoveExpense(int index)
+    {
+        var expense = expenses[index];
+        expenses.RemoveAt(index);
+        totalExpense -= expense.Amount;
+    }
+
+    private void SaveExpenses()
+    {
+        // Add code to save expenses to a database or storage
+    }
+}
+*@

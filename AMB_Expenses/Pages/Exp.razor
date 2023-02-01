@@ -1,0 +1,144 @@
+﻿
+@inject IJSRuntime JSRuntime
+@page "/"
+
+<h1>محاسبه دخل و خرج</h1>
+
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>نوع تراکنش</th>
+            <th>دلیل</th>
+            <th>مبلغ</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in transactions)
+        {
+            <tr>
+                <td>@(transaction.Type == "Income" ? "درآمد":"هزینه")</td>
+                <td>@transaction.Reason</td>    
+                <td>@transaction.Amount</td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => RemoveTransaction(transaction)">حذف</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="form-group">
+    <label for="transactionType">نوع تراکنش</label>
+    <select class="form-control" id="transactionType" @bind="selectedTransactionType">
+        <option value="Expense">هزینه</option>
+        <option value="Income">درآمد</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="transactionReason">دلیل</label>
+    <input type="text" class="form-control" id="transactionReason" @bind="transactionReason" />
+</div>
+
+<div class="form-group">
+    <label for="transactionAmount">مبلغ</label>
+    <input type="number" class="form-control" id="transactionAmount" @bind="transactionAmount" />
+</div>
+
+<button class="btn btn-primary" @onclick="AddTransaction">افزودن</button>
+
+<hr />
+
+<p>مجموع نهایی: @finalAmount</p>
+
+<button class="btn btn-success" @onclick="SaveTransactions">ذخیره لیست تراکنش ها</button>
+
+
+@code {
+    private string selectedTransactionType = "Expense";
+    private string transactionReason;
+    private decimal transactionAmount;
+    private List<Transaction> transactions = new List<Transaction>();
+    private decimal finalAmount;
+
+    private int selectedYear;
+    private int selectedMonth;
+
+    bool dialogIsOpen = false;
+    string name = null;
+    string animal = null;
+    string dialogAnimal = null;
+
+    void OpenDialog()
+    {
+        dialogAnimal = null;
+        dialogIsOpen = true;
+    }
+
+    void OkClick()
+    {
+        animal = dialogAnimal;
+        dialogIsOpen = false;
+    }
+
+    private void AddTransaction()
+    {
+        if (transactionAmount == 0)
+        {
+            return;
+        }
+
+        var transaction = new Transaction
+        {
+            Type = selectedTransactionType,
+            Reason = transactionReason,
+            Amount = transactionAmount
+        };
+
+        transactions.Add(transaction);
+
+        finalAmount = selectedTransactionType == "Expense" ? finalAmount - transactionAmount : finalAmount + transactionAmount;
+
+        transactionReason = string.Empty;
+        transactionAmount = 0;
+    }
+
+
+    private void RemoveTransaction(Transaction transaction)
+    {
+        transactions.Remove(transaction);
+
+        finalAmount = transaction.Type == "Expense" ? finalAmount + transaction.Amount : finalAmount - transaction.Amount;
+    }
+
+
+
+
+    private async Task SaveTransactions()
+    {
+
+        var confirmationResult = await JSRuntime.InvokeAsync<bool>("confirm", "آیا مطمئنید که میخواهید ذخیره کنید؟");
+
+        if (confirmationResult)
+        {
+            //var modalTask = Task.CompletedTask;
+            //await JSRuntime.InvokeVoidAsync("showModal", "transactionsModal");
+       //     await JSRuntime.InvokeVoidAsync("ShowModalTrancation", null);
+            await JSRuntime.InvokeVoidAsync("ShowModalTrancation");
+            //// Wait for the user to confirm saving the transactions
+            
+
+            //// Hide the modal
+            //await JSRuntime.InvokeVoidAsync("hideModal", "transactionsModal");
+
+        }
+    }
+    private class Transaction
+    {
+        public string Type { get; set; }
+        public string Reason { get; set; }
+        public decimal Amount { get; set; }
+    }
+}
